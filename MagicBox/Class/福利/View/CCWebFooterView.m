@@ -62,13 +62,20 @@
 }
 
 -(void)clickPlayButton{
-    [CCMineManage MineMemberInspectionCompletion:^(BOOL MemberStatus) {
+    [CCMineManage MineMemberInspectionWithViewController:self.viewController Completion:^(BOOL MemberStatus) {
         if (MemberStatus) {
             if (self.clickPlayBtn) {
                 self.clickPlayBtn();
             }
         }
     }];
+//    [CCMineManage MineMemberInspectionCompletion:^(BOOL MemberStatus) {
+//        if (MemberStatus) {
+//            if (self.clickPlayBtn) {
+//                self.clickPlayBtn();
+//            }
+//        }
+//    }];
 }
 
 @end

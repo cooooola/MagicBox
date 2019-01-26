@@ -10,6 +10,8 @@
 #import "HttpService.h"
 #import "AppDelegate.h"
 #import "CCJsonTool.h"
+#import "CCLoginViewController.h"
+#import "CCMineMemberRrenewalViewController.h"
 
 //广告
 static NSString * const apiConfigurationFile = @"config/config";
@@ -78,12 +80,15 @@ static NSString * const apiCardExchange = @"card/exchange";//卡密兑换
 }
 
 //会员检测
-+(void)MineMemberInspectionCompletion:(void(^) (BOOL MemberStatus)) completion{
++(void)MineMemberInspectionWithViewController:(UIViewController *)viewController Completion:(void(^) (BOOL MemberStatus)) completion{
     NSString *mobile = [AppDelegate sharedApplicationDelegate].userInfoModel.user_login;
     if (mobile.length == 0) {
-        [self MinePreviewCompletion:^(BOOL PreviewStatus) {
+        [self MinePreviewWithViewController:viewController Completion:^(BOOL PreviewStatus) {
             completion(PreviewStatus);
         }];
+//        [self MinePreviewCompletion:^(BOOL PreviewStatus) {
+//
+//        }];
     }else{
         [CCView BSMBProgressHUD_bufferAndTextWithView:[AppDelegate sharedApplicationDelegate].window andText:@"会员检测中，请稍候..."];
         NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
@@ -104,7 +109,18 @@ static NSString * const apiCardExchange = @"card/exchange";//卡密兑换
                 if ([result isEqualToString:@"1000"]) {
                     completion(YES);
                 }else{
-                    [CCView BSMBProgressHUD_onlyTextWithView:[AppDelegate sharedApplicationDelegate].window andText:msg];
+                    if ([result isEqualToString:@"1001"]) {
+                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"重要提示" message:msg preferredStyle:UIAlertControllerStyleAlert];
+                        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            CCMineMemberRrenewalViewController *mrvc = [[CCMineMemberRrenewalViewController alloc]init];
+                            [viewController.navigationController pushViewController:mrvc animated:YES];
+                        }]];
+                        [viewController presentViewController:alert animated:true completion:nil];
+                        
+                    }else{
+                        [CCView BSMBProgressHUD_onlyTextWithView:[AppDelegate sharedApplicationDelegate].window andText:msg];
+                    }
+//                    [CCView BSMBProgressHUD_onlyTextWithView:[AppDelegate sharedApplicationDelegate].window andText:msg];
                     completion(NO);
                 }
             }
@@ -113,7 +129,7 @@ static NSString * const apiCardExchange = @"card/exchange";//卡密兑换
 }
 
 //未注册登录串号检测
-+(void)MinePreviewCompletion:(void(^) (BOOL PreviewStatus)) completion{
++(void)MinePreviewWithViewController:(UIViewController *)viewController Completion:(void(^) (BOOL PreviewStatus)) completion{
     NSMutableDictionary *parameterDictionary = [NSMutableDictionary dictionary];
     [parameterDictionary setObject:[CCJsonTool JsonHmacSha] forKey:@"key"];
     [parameterDictionary setObject:[CCJsonTool JsonGetNowTimeTimestamp] forKey:@"tm"];
@@ -129,15 +145,28 @@ static NSString * const apiCardExchange = @"card/exchange";//卡密兑换
         }else{
             NSString *result = [NSString stringWithFormat:@"%@",[resultDictionary objectForKey:@"result"]];
             NSString *msg = [resultDictionary objectForKey:@"msg"];
-            [CCView BSMBProgressHUD_onlyTextWithView:[AppDelegate sharedApplicationDelegate].window andText:msg];
+            
             if (![result isEqualToString:@"1000"]) {
+                if ([msg isEqualToString:@"您的免费观看次数已经用完,请注册充值"]) {
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"重要提示" message:msg preferredStyle:UIAlertControllerStyleAlert];
+                    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        CCLoginViewController *lvc = [[CCLoginViewController alloc]init];
+                        [viewController.navigationController pushViewController:lvc animated:YES];
+                    }]];
+                    [viewController presentViewController:alert animated:true completion:nil];
+                    
+                }else{
+                    [CCView BSMBProgressHUD_onlyTextWithView:[AppDelegate sharedApplicationDelegate].window andText:msg];
+                }
                 completion(NO);
             }else{
+                [CCView BSMBProgressHUD_onlyTextWithView:[AppDelegate sharedApplicationDelegate].window andText:msg];
                 completion(YES);
             }
         }
     }];
 }
+
 
 
 //用户启动签到

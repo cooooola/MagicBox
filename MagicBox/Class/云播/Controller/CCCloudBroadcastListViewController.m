@@ -91,7 +91,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    [CCMineManage MineMemberInspectionCompletion:^(BOOL MemberStatus) {
+    [CCMineManage MineMemberInspectionWithViewController:self Completion:^(BOOL MemberStatus) {
         if (MemberStatus) {
             CCCloudBroadcastListModel *model = [self.dataArray objectAtIndex:indexPath.row];
             if (self->_cloudBroadcastType == CloudBroadcastTypePronHhub) {
@@ -103,6 +103,18 @@
             }
         }
     }];
+//    [CCMineManage MineMemberInspectionCompletion:^(BOOL MemberStatus) {
+//        if (MemberStatus) {
+//            CCCloudBroadcastListModel *model = [self.dataArray objectAtIndex:indexPath.row];
+//            if (self->_cloudBroadcastType == CloudBroadcastTypePronHhub) {
+//                [self pornhubPlayVideoWithVideoModel:model];
+//            }else if(self->_cloudBroadcastType == CloudBroadcastTypeXhgdy){
+//                [self xhgPlayVideoWithVideoModel:model];
+//            }else{
+//                [self avPlayVideoWithVideoModel:model];
+//            }
+//        }
+//    }];
 }
 
 -(void)initData{

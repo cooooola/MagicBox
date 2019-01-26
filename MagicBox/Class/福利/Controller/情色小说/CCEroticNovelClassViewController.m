@@ -100,13 +100,20 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [CCMineManage MineMemberInspectionCompletion:^(BOOL MemberStatus) {
+    [CCMineManage MineMemberInspectionWithViewController:self Completion:^(BOOL MemberStatus) {
         if (MemberStatus) {
             CCEroticNovelWebViewController *enwvc = [[CCEroticNovelWebViewController alloc]init];
             enwvc.cloudBroadcastListModel = [self.dataArray objectAtIndex:indexPath.row];
             [self.navigationController pushViewController:enwvc animated:YES];
         }
     }];
+//    [CCMineManage MineMemberInspectionCompletion:^(BOOL MemberStatus) {
+//        if (MemberStatus) {
+//            CCEroticNovelWebViewController *enwvc = [[CCEroticNovelWebViewController alloc]init];
+//            enwvc.cloudBroadcastListModel = [self.dataArray objectAtIndex:indexPath.row];
+//            [self.navigationController pushViewController:enwvc animated:YES];
+//        }
+//    }];
 }
 
 -(NSMutableArray *)dataArray{

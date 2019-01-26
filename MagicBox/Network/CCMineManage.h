@@ -24,7 +24,7 @@
 
  @param completion 数据返回
  */
-+(void)MineMemberInspectionCompletion:(void(^) (BOOL MemberStatus)) completion;
++(void)MineMemberInspectionWithViewController:(UIViewController *)viewController Completion:(void(^) (BOOL MemberStatus)) completion;
 
 
 
@@ -33,7 +33,7 @@
 
  @param completion 数据返回
  */
-+(void)MinePreviewCompletion:(void(^) (BOOL PreviewStatus)) completion;
++(void)MinePreviewWithViewController:(UIViewController *)viewController Completion:(void(^) (BOOL PreviewStatus)) completion;
 
 
 /*******************************************用户管理****************************************/

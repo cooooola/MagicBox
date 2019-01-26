@@ -52,6 +52,12 @@
         make.centerX.equalTo(self.view);
         make.width.height.equalTo(@60);
     }];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![@"YES" isEqualToString:[userDefaults objectForKey:@"isShowPlayerMassage"]]) {
+        [userDefaults setObject:@"YES" forKey:@"isShowPlayerMassage"];
+        [CCView BSMBProgressHUD_onlyTextWithView:[AppDelegate sharedApplicationDelegate].window andText:@"您可以上下滑动切换主播哟！"];
+    }
 }
 
 - (instancetype)initWithVideos:(NSArray *)videos index:(NSInteger)index{

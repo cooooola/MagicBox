@@ -101,15 +101,24 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    [CCMineManage MineMemberInspectionCompletion:^(BOOL MemberStatus) {
+    [CCMineManage MineMemberInspectionWithViewController:self Completion:^(BOOL MemberStatus) {
         if (MemberStatus) {
             CCPlayerViewController *pvc = [[CCPlayerViewController alloc]initWithVideos:self.dataArray index:indexPath.row];
-//            - (instancetype)initWithVideos:(NSArray *)videos index:(NSInteger)index;
-//            CCLiveBroadcastViewController *lbvc = [[CCLiveBroadcastViewController alloc]init];
-//            lbvc.livePlatformModel = [self.dataArray objectAtIndex:indexPath.row];
+            //            - (instancetype)initWithVideos:(NSArray *)videos index:(NSInteger)index;
+            //            CCLiveBroadcastViewController *lbvc = [[CCLiveBroadcastViewController alloc]init];
+            //            lbvc.livePlatformModel = [self.dataArray objectAtIndex:indexPath.row];
             [self.navigationController pushViewController:pvc animated:YES];
         }
     }];
+//    [CCMineManage MineMemberInspectionCompletion:^(BOOL MemberStatus) {
+//        if (MemberStatus) {
+//            CCPlayerViewController *pvc = [[CCPlayerViewController alloc]initWithVideos:self.dataArray index:indexPath.row];
+////            - (instancetype)initWithVideos:(NSArray *)videos index:(NSInteger)index;
+////            CCLiveBroadcastViewController *lbvc = [[CCLiveBroadcastViewController alloc]init];
+////            lbvc.livePlatformModel = [self.dataArray objectAtIndex:indexPath.row];
+//            [self.navigationController pushViewController:pvc animated:YES];
+//        }
+//    }];
 }
 
 -(NSMutableArray *)dataArray{
