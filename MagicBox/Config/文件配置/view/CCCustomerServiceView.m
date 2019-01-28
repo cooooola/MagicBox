@@ -63,7 +63,8 @@
     if (_showMessageLabel == nil) {
         _showMessageLabel = [[UILabel alloc]init];
         _showMessageLabel.font = [UIFont systemFontOfSize:17];
-        _showMessageLabel.textColor = MCUIColorFromRGB(0x80829c);
+        _showMessageLabel.textColor = [UIColor whiteColor];
+//        MCUIColorFromRGB(0x80829c);
 //        _showMessageLabel.textAlignment = NSTextAlignmentCenter;
         _showMessageLabel.numberOfLines = 0;
     }
@@ -91,6 +92,19 @@
 
 
 -(void)setViewMessageString:(NSString *)viewMessageString{
+    float stringH = [viewMessageString heightForFont:[UIFont systemFontOfSize:17] width:MCScreenWidth-60];
+    [self.showView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(20);
+        make.right.equalTo(self).offset(-20);
+        make.center.equalTo(self);
+        make.height.equalTo(@(stringH + 80));
+    }];
+    [self.showMessageLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.equalTo(self.showView).offset(10);
+        make.right.equalTo(self.showView).offset(-10);
+        make.bottom.equalTo(self.showView).offset(-60);
+    }];
+    
     self.showMessageLabel.text = viewMessageString;
 }
 

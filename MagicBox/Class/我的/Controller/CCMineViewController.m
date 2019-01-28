@@ -45,10 +45,10 @@
         self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, 100)];
         [self.tableView.tableFooterView addSubview:self.signoutButton];
         [self.signoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.tableView.tableFooterView);
+            make.center.equalTo(self.tableView.tableFooterView);
             make.height.equalTo(@40);
             make.width.width.equalTo(@(MCScreenWidth-40));
-            make.bottom.equalTo(self.tableView.tableFooterView);
+//            make.bottom.equalTo(self.tableView.tableFooterView);
         }];
     }else{
         

@@ -226,7 +226,7 @@
 -(void)playWithUrl:(NSString *)url andTitle:(NSString *)title{
     HJVideoPlayerController * videoC = [[HJVideoPlayerController alloc] init];
     [videoC.configModel setOnlyFullScreen:NO];
-    [videoC.configModel setAutoPlay:NO];
+    [videoC.configModel setAutoPlay:YES];
     [videoC setUrl:url];
     [videoC setVideoTitle:title];
     self.hidesBottomBarWhenPushed=YES;

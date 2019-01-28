@@ -298,7 +298,9 @@
         }else{
             NSString *result = [NSString stringWithFormat:@"%@",[resultDictionary objectForKey:@"code"]];
             NSString *msg = [NSString stringWithFormat:@"%@",[resultDictionary objectForKey:@"msg"]];
-            [CCView BSMBProgressHUD_onlyTextWithView:self.view andText:msg];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"重要提示" message:msg preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:true completion:nil];
             if ([result isEqualToString:@"1000"]) {
                 self.cardTextField.text = nil;
                 [self getUserInformation];

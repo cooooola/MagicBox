@@ -70,6 +70,7 @@ typedef NS_ENUM(NSUInteger, MoveDirection) {
 
 @property(nonatomic,strong)UIImageView *adImageView;
 @property(nonatomic,strong)UIButton *closedownButton;
+@property(nonatomic,assign)BOOL isShowAD;
 
 @end
 
@@ -93,6 +94,8 @@ static const NSInteger maxSecondsForBottom = 5.f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.isShowAD = NO;
+    
     [self setupUI];
     
     [self initW];
@@ -100,7 +103,6 @@ static const NSInteger maxSecondsForBottom = 5.f;
     [self handleProgress];
     [self addObservers];
     [self addTapGesture];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -206,6 +208,7 @@ static const NSInteger maxSecondsForBottom = 5.f;
     [self.view addSubview:self.bottomView];
     
     [self setADimageView];
+    self.isShowAD = YES;
 }
 
 - (void)changeUI{
@@ -234,12 +237,14 @@ static const NSInteger maxSecondsForBottom = 5.f;
     [self.view addSubview:self.bottomView];
     
     [self setADimageView];
+    self.isShowAD = YES;
 }
 
 
 
 
 - (void)changeFullScreen:(BOOL)changeFull{
+    self.isShowAD = NO;
     
     self.isFullScreen = changeFull;
   
@@ -434,11 +439,11 @@ static const NSInteger maxSecondsForBottom = 5.f;
 - (void)play{
     
     //若有记录则从记录播放
-    if ([kVideoPlayerManager recordWithUrl:self.url]) {
-        HJVideoPlayTimeRecord * record = [kVideoPlayerManager recordWithUrl:self.url];
-        [kVideoPlayerManager seekToTime:record.playTime];
-        [kVideoPlayerManager removeRecord:record];
-    }
+//    if ([kVideoPlayerManager recordWithUrl:self.url]) {
+//        HJVideoPlayTimeRecord * record = [kVideoPlayerManager recordWithUrl:self.url];
+//        [kVideoPlayerManager seekToTime:record.playTime];
+//        [kVideoPlayerManager removeRecord:record];
+//    }
     
     [kVideoPlayerManager play];
     [self setPlayStatus:videoPlayer_playing];
@@ -454,6 +459,7 @@ static const NSInteger maxSecondsForBottom = 5.f;
     });
     
     [self setADimageView];
+    self.isShowAD = YES;
 }
 
 
@@ -752,6 +758,9 @@ static const NSInteger maxSecondsForBottom = 5.f;
 }
 
 -(void)setADimageView{
+    if (!self.isShowAD) {
+        return;
+    }
     [self.playerView addSubview:self.adImageView];
     [self.adImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.maskView);

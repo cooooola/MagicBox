@@ -141,13 +141,9 @@
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType{
     self.currentUrl = request.URL.absoluteString;
-    NSLog(@"%@",self.currentUrl);
     return YES;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
-}
 
 - (NSString *)htmlAdjustWithPageWidth:(CGFloat )pageWidth html:(NSString *)html webView:(UIWebView *)webView{
     NSMutableString *str = [NSMutableString stringWithString:html];
@@ -157,6 +153,23 @@
     [str replaceOccurrencesOfString:@"</head>" withString:stringForReplace options:NSLiteralSearch range:range];
     return str;
 }
+
+//1.开始加载网页的时候调用
+-(void)webViewDidStartLoad:(UIWebView *)webView{
+    [CCView BSMBProgressHUD_bufferAndTextWithView:self.view andText:@"正在加载数据"];
+}
+
+//2.加载完成的时候调用
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [CCView BSMBProgressHUD_hideWith:self.view];
+}
+
+//3.加载失败的时候调用
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    [CCView BSMBProgressHUD_hideWith:self.view];
+    [CCView BSMBProgressHUD_onlyTextWithView:self.view andText:@"网络错误，请稍后再试"];
+}
+
 
 
 
