@@ -167,7 +167,7 @@
 //3.加载失败的时候调用
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     [CCView BSMBProgressHUD_hideWith:self.view];
-    [CCView BSMBProgressHUD_onlyTextWithView:self.view andText:@"网络错误，请稍后再试"];
+//    [CCView BSMBProgressHUD_onlyTextWithView:self.view andText:@"网络错误，请稍后再试"];
 }
 
 

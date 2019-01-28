@@ -94,7 +94,7 @@ static const NSInteger maxSecondsForBottom = 5.f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.isShowAD = NO;
+    self.isShowAD = YES;
     
     [self setupUI];
     
